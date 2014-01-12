@@ -1,6 +1,7 @@
 require './animal'
 require './shelter'
 require './client'
+require 'pry'
 
 happitails = Shelter.new
 puts `clear`
@@ -17,6 +18,19 @@ def menu_logo
 	puts "|__________________________________________________________________|"
 end
 
+def add_animal(shelter)
+	puts "Please enter animal's name"
+	name = gets.chomp
+	puts "Please enter animals's age"
+	age = gets.chomp
+	puts "Pleae enter animal's gender"
+	gender = gets.chomp
+	puts "Please enter animal's species"
+	species = gets.chomp
+	shelter.animals << Animal.new(name, age, gender, species)
+	message = "Animal Added:\n Name: #{name} \n Age: #{age} \n Gender: #{gender} \n Species: #{species}"
+	message
+end
 
 def menu message
 	puts `clear`
@@ -40,36 +54,53 @@ choice = menu message
 while choice != 'q'
 	message = ""
 		case choice
+		
+
 		when "1"
-			message = "Create a New Client"
-			puts "Please enter client's name"
+			puts "Create a New Client\n"
+			print "Please enter client's name: "
 			name = gets.chomp
-			puts "Please enter client's age"
+			print "Please enter client's age: "
 			age = gets.chomp
-			puts "Pleae enter client's number of children"
+			print "Pleae enter client's number of children: "
 			num_of_kids = gets.chomp
-			puts "Please enter client's number of pets"
+			print "Please enter client's number of pets: "
 			num_of_pets = gets.chomp
 			happitails.clients << Client.new(name, num_of_kids, age, num_of_pets)
 			message += "New Client Created:\n Name: #{name} \n Age: #{age} \n Number of Children: #{num_of_kids} \n Number of Pets: #{num_of_pets}"
 
+		
 		when "2"
-			message += "Option 2 - Create a New Animal"
-
+			puts "Create a New Animal"
+			message += add_animal happitails
+		
 		when "3"
 			message = "Display All Client Records\n"
-			message += happitails.get_client_list 
+			message += happitails.client_list 
+		
+
 		when "4"
-			message += "Option 4 - Display All Animal Records"
+			message = "Display All Animal Records\n"
+			message += happitails.animal_list
+
 
 		when "5"
 			message += "Option 5 - Facilitate an Adoption"
 
+		
 		when "6"
-			message += "Option 6 - Recieve Adoption from Client"
+			puts "Recieve Adoption from Client"
+			puts "Select Client"
+			happitails.clients.each_with_index do |name, index|
+				puts "#{index + 1} - #{name}"
+				binding.pry
+			end
+			client = gets.chomp
 
+
+		
 		else
-			message += "I don't understand"
+			message += "Invalid Option.  Please try again"
 		end
 
 		choice = menu message
