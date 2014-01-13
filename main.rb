@@ -25,31 +25,31 @@ def menu_logo
 end
 
 def add_client (shelter, message = "")
-	print "Please enter client's name: "
+	print "Please enter client's name              :  "
 	name = gets.chomp
-	print "Please enter client's age: "
+	print "Please enter client's age               :  "
 	age = gets.chomp
-	print "Pleae enter client's number of children: "
+	print "Pleae enter client's number of children :  "
 	num_of_kids = gets.chomp
-	print "Please enter client's number of pets: "
+	print "Please enter client's number of pets    :  "
 	num_of_pets = gets.chomp
 	shelter.clients << Client.new(name: name, num_of_kids: num_of_kids, age: age, num_of_pets: num_of_pets.to_i)
-	message += "New Client Created:\n Name: #{name} \n Age: #{age} \n Number of Children: #{num_of_kids} \n Number of Pets: #{num_of_pets}"
+	message += "New Client Created:\n Name               : #{name} \n Age               : #{age} \n Number of Children : #{num_of_kids} \n Number of Pets     : #{num_of_pets}"
 	message
 end
 
 
 def add_animal(shelter, message = "")
-	print "Please enter animal's name"
+	print "Please Enter Animal's name    :  "
 	name = gets.chomp
-	print "Please enter animals's age"
+	print "Please enter animal's age     :  "
 	age = gets.chomp
-	print "Pleae enter animal's gender"
+	print "Please enter animal's gender  :  "
 	gender = gets.chomp
-	print "Please enter animal's species"
+	print "Please enter animal's species :  "
 	species = gets.chomp
 	shelter.animals << Animal.new(:name => name, :age => age, :gender => gender, :species => species)
-	message = "Animal Added:\n Name: #{name} \n Age: #{age} \n Gender: #{gender} \n Species: #{species}"
+	message = "Animal Added:\n Name    : #{name} \n Age     : #{age} \n Gender  : #{gender} \n Species : #{species}"
 	message
 end
 
@@ -82,7 +82,7 @@ while choice != 'q'
 	
 	when "2"
 		menu_logo
-		puts "Create a New Animal"
+		puts "Create a New Animal\n"
 		message += add_animal happitails
 	
 	when "3"
@@ -120,20 +120,21 @@ while choice != 'q'
 		menu = ""
 		while requested_animal != "b"
 			if requested_animal == "a"
+				menu_logo
 				puts "Please Add Animal" 
 				add_animal happitails
 				message = "Return to Facilitate Adoption menu (option 5) \nto complete transaction"
 				requested_animal = "b"
 			else
+				menu_logo
 				selected_animal = (happitails.animals.select {|animal| animal.name == requested_animal}).first
-				puts `clear`
+				menu_logo
 				puts "Please Enter Full Name of Client Adopting Animal. \nClient MUST Already be in System."
 				puts "If Client is NOT in System, Please Press B to Return To Main Menu"
 				puts happitails.client_list
 				print "\n Please make selection: "; requested_client = gets.chomp
 				while requested_animal != "b"	
 					selected_client = (happitails.clients.select {|client| client.name == requested_client}).first
-					puts selected_client.num_of_pets
 					selected_client.num_of_pets += 1
 					puts "Client now has #{selected_client.num_of_pets} Pets"
 					happitails.animals.delete(selected_animal)
